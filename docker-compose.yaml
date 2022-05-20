@@ -1,0 +1,41 @@
+version: "3"
+services:
+  ## https://github.com/BytemarkHosting/configs-jenkins-docker/blob/master/docker-compose.yml
+  ## https://community.traefik.io/t/502-bad-gateway-connection-refused-error/6212
+  ## https://www.cloudbees.com/blog/how-to-install-and-run-jenkins-with-docker-compose
+  ## https://stackoverflow.com/questions/37331571/how-to-setup-ssh-keys-for-jenkins-to-publish-via-ssh
+  ## https://docs.docker.com/engine/install/debian/
+  ## https://support.cloudbees.com/hc/en-us/articles/222978868-How-to-Connect-to-Remote-SSH-Agents-
+  ## https://acloudguru.com/blog/engineering/adding-a-jenkins-agent-node
+  
+
+  jenkins:
+    image: jenkins/jenkins:2.332.3-lts
+    container_name: jenkins
+    restart: unless-stopped
+    privileged: true
+    user: root
+    ports:
+      - 50000:50000
+      - 8080:8080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      #- ./jenkins_home:/var/jenkins_home
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # agent:
+  #   image: jenkins/ssh-agent:jdk11
+  #   privileged: true
+  #   user: root
+  #   container_name: agent
+  #   expose:
+  #     - 22
+  #   environment:      
+  #     - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDRAcypISFV/3soYb6d1H/L47qAe2XYreoPEUkwiIKy/ItamSa0YsRAH7FCfYg+UKomeKBA+nvylFvWAFE41t5DdGC+G72ZqsqHsLtJOQ42mbBi++1eIiwyIDLnUDObH6rvvsWAokS/81aEFJfnBzTjRG904Lw57tq3DqudMJ7p8+p4JmRwnJPxgJQAj1Kjqo/UyPjI3s9QiPIHbi+h4MHw88OgDjwxCK5UN37VXrsfg4LFEPfvZq2tFf/0Z/24Jp8v9XEjOjPf2AZIAliVR9NEEWewhY3jsdV6cGWcQ2vMoWZc+Fj7gI3NezZ0a0YXV4ii043Y1xGIub+lK1wugxc5Eqxot4a5G6usRgHxCIA35FmHyOQKGkNj+E8ld7kSIcTnD/nrNf8dx0w0RT/TOymwuQIYB4llaGbWXIRvqzEZZZpizP8gF1xz2Kn5lCiQvGzEzC8fSc1rEljw/Qbh6DSovVJnpQONzwOtWaf9P3wVBRkloZ3jlvZdw/XPa4AzTw0= jenkins@1aae9dbd59c4
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  jenkins_home: 
