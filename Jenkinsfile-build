@@ -5,7 +5,7 @@ pipeline {
         }
     }
     stages {
-        state('scm') {
+        stage('scm') {
             steps {
                 git branch: 'main', url: 'https://github.com/fernandovilar/xUnit-Jenkins.git'
             }
