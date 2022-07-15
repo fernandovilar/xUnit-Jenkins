@@ -5,8 +5,14 @@ pipeline {
         }
     }
     stages {
+        state('scm') {
+            steps {
+                git branch: 'main', url: 'https://github.com/fernandovilar/xUnit-Jenkins.git'
+            }
+        }
         stage('Test') {
             steps {
+                sh 'dotnet --info'
                 sh 'dotnet test ./xUnitJenkins/xUnitJenkins.sln --logger:trx'
             }
         }
