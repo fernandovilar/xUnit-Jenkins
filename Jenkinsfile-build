@@ -4,6 +4,10 @@ pipeline {
             image 'mcr.microsoft.com/dotnet/sdk:6.0' 
         }
     }
+    environment {
+        DB_ENGINE    = 'sqlite'
+        DOTNET_CLI_HOME = "/tmp"
+    }    
     stages {
         stage('scm') {
             steps {
@@ -14,6 +18,7 @@ pipeline {
             steps {
                 sh 'dotnet --info'
                 sh 'echo $(pwd)'
+                sh 'echo ${DOTNET_CLI_HOME}'
                 sh 'ls -l'
                 sh 'dotnet restore ./xUnitJenkins/xUnitJenkins.sln --verbosity diag'
                 sh 'dotnet build ./xUnitJenkins/xUnitJenkins.sln'
