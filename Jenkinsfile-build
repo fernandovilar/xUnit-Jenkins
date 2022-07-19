@@ -15,7 +15,7 @@ pipeline {
                 sh 'dotnet --info'
                 sh 'echo $(pwd)'
                 sh 'ls -l'
-                sh 'dotnet restore ./xUnitJenkins/xUnitJenkins.sln'
+                sh 'dotnet restore ./xUnitJenkins/xUnitJenkins.sln --verbosity diag'
                 sh 'dotnet build ./xUnitJenkins/xUnitJenkins.sln'
                 sh 'dotnet test ./xUnitJenkins/xUnitJenkins.sln --logger:trx'
             }
