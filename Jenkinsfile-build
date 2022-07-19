@@ -13,6 +13,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'dotnet --info'
+                sh 'echo $(pwd)'
+                sh 'ls -l'
                 sh 'dotnet test ./xUnitJenkins/xUnitJenkins.sln --logger:trx'
             }
         }
