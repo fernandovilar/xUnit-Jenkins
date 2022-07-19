@@ -14,7 +14,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/fernandovilar/xUnit-Jenkins.git'
             }
         }
-        stage('Test') {
+        stage('Info') {
             steps {
                 sh 'dotnet --info'
                 sh 'echo $(pwd)'
@@ -23,6 +23,20 @@ pipeline {
                 sh 'dotnet restore ./xUnitJenkins/xUnitJenkins.sln'
                 sh 'dotnet build ./xUnitJenkins/xUnitJenkins.sln'
                 sh 'dotnet test ./xUnitJenkins/xUnitJenkins.sln --logger:trx'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'dotnet restore ./xUnitJenkins/xUnitJenkins.sln'
+                sh 'dotnet test ./xUnitJenkins/xUnitJenkins.sln --logger:trx'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh '''
+                    dotnet build ./xUnitJenkins/xUnitJenkins.sln
+                    dotnet publish ./xUnitJenkins/xUnitJenkins.sln
+                   ''' 
             }
         }
     }
